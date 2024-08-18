@@ -158,9 +158,14 @@ class Atomwise(nn.Module):
         if self.add_linear_nn:
             y += self.linear_nn(features)
             print("y after self.add_linear_nn:", y.shape)
+        
+        print("self.per_atom_output_key:", self.per_atom_output_key)
 
-        y_nonlocal = self.nonlocal_interaction(y, data["batch"])
-        print("y_nonlocal:", y_nonlocal.shape)
+        if self.per_atom_output_key == 'q':
+            y = self.nonlocal_interaction(y, data["batch"])
+            print("y_nonlocal:", y.shape)
+        
+        print("y before self.per_atom_output_key :", y.shape)
 
         # accumulate the per-atom output if necessary
         if self.per_atom_output_key is not None:

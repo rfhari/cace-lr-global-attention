@@ -131,8 +131,8 @@ class NonlocalInteraction(nn.Module):
                 modified_graph_node = self.attn(graph_node_properties)            
                 print("modified_graph_node:", modified_graph_node.squeeze(0).shape)
                 grouped_node_properties.append(modified_graph_node.squeeze(0))   
-        
-        grouped_node_properties = torch.stack(grouped_node_properties)
-        print("attention implemented")
+
+        grouped_node_properties = torch.cat(grouped_node_properties, dim=0)
+        print("attention implemented", grouped_node_properties.shape)
 
         return grouped_node_properties
